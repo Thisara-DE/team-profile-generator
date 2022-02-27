@@ -64,19 +64,106 @@ const promptManager = () => {
                     return false;
                 }
             } 
-        },
-        {
-            type: 'list',
-            name: 'memberAddPrompt',
-            message: "Which type of team member would you like to add?",
-            choices: ['Engineer', 'Intern', "I don't want to add any more team members"]                     
-        }
-    ]).then()
+        },        
+    ]);
 }
 
+const promptTeamMembers = teamData => {
+    if(!teamData.team) {
+        teamData.team = [];
+    }
 
+    return inquirer.prompt([
+        {
+            type: 'list',
+            name: 'employeeType',
+            message: "Which type of team member would you like to add?",
+            choices: ['Engineer', 'Intern', "I don't want to add any more team members"]
+        },
+        {
+            type: 'input',
+            name: 'empName',
+            message: (answer) => `What is the ${answer.employeeType}'s name?`,
+            when: (answer) => answer.employeeType === "Engineer" || answer.employeeType === "Intern",
+            validate: (empName, answer) => {
+                if(empName) {
+                    return true;
+                } else {
+                    console.log(`Please enter ${answer.employeeType}'s name`);
+                    return false;
+                }
+            }            
+        },
+        {
+            type: 'input',
+            name: 'empId',
+            message: (answer) => `What is the ${answer.employeeType}'s ID?`,
+            when: (answer) => answer.employeeType === "Engineer" || answer.employeeType === "Intern",
+            validate: (empId, answer) => {
+                if(empId) {
+                    return true;
+                } else {
+                    console.log(`Please enter ${answer.employeeType}'s ID`);
+                    return false;
+                }
+            }
+        },
+        {
+            type: 'input',
+            name: 'empEmail',
+            message: (answer) => `What is the ${answer.employeeType}'s email?`,
+            when: (answer) => answer.employeeType === "Engineer" || answer.employeeType === "Intern",
+            validate: (empEmail, answer) => {
+                if(empEmail) {
+                    return true;
+                } else {
+                    console.log(`Please enter ${answer.employeeType}'s email`);
+                    return false;
+                }
+            }
+        },
+        {
+            type: 'input',
+            name: 'engGithub',
+            message: (answer) => `What is the ${answer.employeeType}'s GitHub username?`,
+            when: (answer) => answer.employeeType === "Engineer",
+            validate: (engGithub, answer) => {
+                if(engGithub) {
+                    return true;
+                } else {
+                    console.log(`Please enter ${answer.employeeType}'s GitHub username`);
+                    return false;
+                }
+            }
+        },
+        {
+            type: 'input',
+            name: 'internSchool',
+            message: (answer) => `What is the ${answer.employeeType}'s school?`,
+            when: (answer) => answer.employeeType === "Intern",
+            validate: (internSchool, answer) => {
+                if(internSchool) {
+                    return true;
+                } else {
+                    console.log(`Please enter ${answer.employeeType}'s school`);
+                    return false;
+                }
+            }
+        }
+    ]).then(teamData => {
+        teamData.push(teamData);
+        if(answer.employeeType === "I don't want to add any more team members") {
+            return teamData;
+        } else {
+            return promptTeamMembers(teamData);
+        }
+    });
+}
 
 promptManager()
-    .then(output => {
-        console.log(output);
-});
+    .then(teamData => {
+        promptTeamMembers(teamData);
+        
+    }).then(teamData => console.log(teamData));
+    // .then(promptTeamMembers)
+    // .then(team => {console.log(team)});
