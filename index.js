@@ -1,15 +1,6 @@
 const inquirer = require('inquirer');
 const fs = require('fs');
-
-// ----- Prompt Manager section ------
-// What is the team manager's name?
-// What is the team manager's id?
-// What is the team manager's email?
-// What is the team manager's office number?
-// Which type of team member would you like to add?
-    // type: list
-    // choices: [Engineer, Intern, I don't want to add any more team members]
-
+const generatePage = require('./src/page-template');
 
 const promptManager = () => {
     return inquirer.prompt([
@@ -68,10 +59,8 @@ const promptManager = () => {
     ]);
 }
 
-const promptTeamMembers = teamData => {
-    if(!teamData.team) {
-        teamData.team = [];
-    }
+const promptTeamMembers = currentTeam => {
+    
 
     return inquirer.prompt([
         {
@@ -150,20 +139,23 @@ const promptTeamMembers = teamData => {
                 }
             }
         }
-    ]).then(teamData => {
-        teamData.push(teamData);
-        if(answer.employeeType === "I don't want to add any more team members") {
-            return teamData;
-        } else {
-            return promptTeamMembers(teamData);
+    ]).then(newMember => {
+        currentTeam.push(newMember);               
+
+        if(newMember.employeeType === "I don't want to add any more team members") {
+            return currentTeam;
+        } else {            
+            return promptTeamMembers(currentTeam);
         }
     });
 }
 
 promptManager()
-    .then(teamData => {
-        promptTeamMembers(teamData);
-        
-    }).then(teamData => console.log(teamData));
-    // .then(promptTeamMembers)
-    // .then(team => {console.log(team)});
+    .then(managerData => {
+        const teamMembers = [];
+        teamMembers.push(managerData);
+        return promptTeamMembers(teamMembers);        
+    })
+    .then(currentTeam => {
+        return generatePage(currentTeam)});
+    
