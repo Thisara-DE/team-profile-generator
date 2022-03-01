@@ -2,6 +2,36 @@ const inquirer = require('inquirer');
 const fs = require('fs');
 const generatePage = require('./src/page-template');
 
+const mockData = [
+    {
+        managerName: 'Thisara',
+        managerId: '1',
+        managerEmail: 't@g.co',
+        managerOffice: '11'
+    },
+    {
+        employeeType: 'Engineer',
+        empName: 'Ron',
+        empId: '2',
+        empEmail: 'r@g.co',
+        engGithub: 'rSwan'
+    },
+    {
+        employeeType: 'Intern',
+        empName: 'Ella',
+        empId: '3',
+        empEmail: 'e@g.co',
+        internSchool: 'SCSU'
+    },
+    {
+        employeeType: 'Engineer',
+        empName: 'Dan',
+        empId: '4',
+        empEmail: 'd@g.co',
+        engGithub: 'danDog'
+    }        
+];
+
 const promptManager = () => {
     return inquirer.prompt([
         {
@@ -150,12 +180,15 @@ const promptTeamMembers = currentTeam => {
     });
 }
 
-promptManager()
-    .then(managerData => {
-        const teamMembers = [];
-        teamMembers.push(managerData);
-        return promptTeamMembers(teamMembers);        
-    })
-    .then(currentTeam => {
-        return generatePage(currentTeam)});
-    
+// promptManager()
+//     .then(managerData => {
+//         const teamMembers = [];
+//         teamMembers.push(managerData);
+//         return promptTeamMembers(teamMembers);        
+//     })
+//     .then(currentTeam => {
+//         console.log(currentTeam);
+//         return generatePage(mockData);
+//     });
+
+generatePage(mockData);
