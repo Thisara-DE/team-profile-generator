@@ -51,4 +51,6 @@
 
   <br>
 
+  <img src="assets\mockup.png" alt="Picture of the website's landing page"/>
+
   ## &copy; 2022 by [ThisaraMallawaArachchige](https://github.com/ThisaraMallawaArachchige)

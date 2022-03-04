@@ -203,7 +203,7 @@ promptManager()
     })
     .then(currentTeam => {   
         // replace mockData with currentTeam     
-        return generatePage(mockData);
+        return generatePage(currentTeam);
     })
     .then(teamData => {
         console.log('Check the dist directory for your team HTML!')
