@@ -57,7 +57,7 @@ function generateTeam(teamArr) {
                 <p class="title is-size-6">Email: <a href="mailto: ${engineer.getEmail()}" target="_blank">${engineer.getEmail()}</a></p>
               </article>
               <article class="tile is-child box">
-                  <p class="title is-size-6">GitHub: ${engineer.getGithub()}</p>
+              <p class="title is-size-6">Github: <a href="https://github.com/${engineer.getGithub()}" target="_blank">${engineer.getGithub()}</a></p>
               </article>
           </figure>
           </article>
