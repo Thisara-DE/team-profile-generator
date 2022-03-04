@@ -1,34 +1,49 @@
 const inquirer = require('inquirer');
 const fs = require('fs');
 const generatePage = require('./src/page-template');
+const writeFile = require('./src/generate-site');
 
 const mockData = [
     {
-        managerName: 'Thisara',
+        managerName: 'Michael Scott',
         managerId: '1',
-        managerEmail: 't@g.co',
+        managerEmail: 'M@g.co',
         managerOffice: '11'
     },
     {
         employeeType: 'Engineer',
-        empName: 'Ron',
+        empName: 'Jim Halpert',
         empId: '2',
-        empEmail: 'r@g.co',
-        engGithub: 'rSwan'
+        empEmail: 'J@g.co',
+        engGithub: 'jHal'
     },
     {
         employeeType: 'Intern',
-        empName: 'Ella',
+        empName: 'Pam Beasly',
         empId: '3',
-        empEmail: 'e@g.co',
+        empEmail: 'P@g.co',
         internSchool: 'SCSU'
     },
     {
         employeeType: 'Engineer',
-        empName: 'Dan',
+        empName: 'Dwight Schrute',
         empId: '4',
         empEmail: 'd@g.co',
-        engGithub: 'danDog'
+        engGithub: 'dShrute'
+    },
+    {
+        employeeType: 'Intern',
+        empName: 'Ryan Howard',
+        empId: '5',
+        empEmail: 'R@g.co',
+        internSchool: 'UofM'
+    },
+    {
+        employeeType: 'Intern',
+        empName: 'Justin Doe',
+        empId: '6',
+        empEmail: 'J@g.co',
+        internSchool: 'UofM'
     }        
 ];
 
@@ -180,15 +195,18 @@ const promptTeamMembers = currentTeam => {
     });
 }
 
-// promptManager()
-//     .then(managerData => {
-//         const teamMembers = [];
-//         teamMembers.push(managerData);
-//         return promptTeamMembers(teamMembers);        
-//     })
-//     .then(currentTeam => {
-//         console.log(currentTeam);
-//         return generatePage(mockData);
-//     });
+promptManager()
+    .then(managerData => {
+        const teamMembers = [];
+        teamMembers.push(managerData);
+        return promptTeamMembers(teamMembers);        
+    })
+    .then(currentTeam => {   
+        // replace mockData with currentTeam     
+        return generatePage(mockData);
+    })
+    .then(teamData => {
+        console.log('Check the dist directory for your team HTML!')
+        return writeFile(teamData);
+    });
 
-generatePage(mockData);
