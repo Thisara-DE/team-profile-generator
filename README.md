@@ -22,9 +22,7 @@
 
   ## Usage
   This project is using following technologies: <br><br>
-  Node.js,  JavaScript,  HTML,  Bulma
-
-  Video walkthrough: https://drive.google.com/file/d/1RlgZqqaNBv1uio47ZTkGsC1x2ysnuRhc/view
+  Node.js,  JavaScript,  HTML,  Bulma  
 
   <br>
 
